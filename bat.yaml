@@ -7,7 +7,7 @@
         this_package_name: bat
         this_git_repo_name: pub_config
         this_catpuccin_theme_repo_name: catppuccin
-        this_catpuccin_selected_theme: Catppuccin-frappe.tmTheme
+        this_catpuccin_selected_theme: Catppuccin-mocha.tmTheme
 
     - name: Set facts part 2
       ansible.builtin.set_fact:
