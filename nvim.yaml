@@ -4,13 +4,14 @@
   tasks:
     - name: Set facts part 1
       ansible.builtin.set_fact:
-        this_git_repo_name: lazyvim
+        this_package_name: nvim
+        this_git_repo_name: "lazyvim"
 
     - name: Set facts part 2
       ansible.builtin.set_fact:
         this_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_git_repo_name }}"
 
-    - name: Install nvim
+    - name: Install {{ this_package_name }}
       ansible.builtin.include_tasks: common_tasks/package_installer.yaml
       vars:
         package_name: nvim
@@ -26,4 +27,4 @@
       ansible.builtin.include_tasks: common_tasks/symlink_creator.yaml
       vars:
         src: "{{ this_git_repo_destination }}"
-        dest: "{{ global.workstation_configuration }}/nvim"
+        dest: "{{ global.workstation_configuration }}/{{ this_package_name }}"

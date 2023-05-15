@@ -15,7 +15,7 @@
         this_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_git_repo_name }}"
         this_catpuccin_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_catpuccin_theme_repo_name }}"
 
-    - name: Install bat
+    - name: Install {{ this_package_name }}
       ansible.builtin.include_tasks: common_tasks/package_installer.yaml
       vars:
         package_name: "{{ this_package_name }}"
@@ -60,3 +60,5 @@
 
     - name: Rebuild bat's cache
       ansible.builtin.command: bat cache --build
+      register: bat_cache_build
+      changed_when: bat_cache_build.rc != 0

@@ -3,4 +3,3 @@
   community.general.homebrew:
     name: "{{ package_name }}"
     state: present
-
