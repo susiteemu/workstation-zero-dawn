@@ -1,0 +1,3 @@
+global:
+  git_repo_destination: $HOME/sandbox/repositories
+  workstation_configuration: $HOME/sandbox/.config

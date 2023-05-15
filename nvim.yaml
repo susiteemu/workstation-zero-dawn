@@ -1,0 +1,29 @@
+---
+- name: Run nvim playbook
+  hosts: localhost
+  tasks:
+    - name: Set facts part 1
+      ansible.builtin.set_fact:
+        this_git_repo_name: lazyvim
+
+    - name: Set facts part 2
+      ansible.builtin.set_fact:
+        this_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_git_repo_name }}"
+
+    - name: Install nvim
+      ansible.builtin.include_tasks: common_tasks/package_installer.yaml
+      vars:
+        package_name: nvim
+
+    - name: Clone configuration
+      ansible.builtin.include_tasks: common_tasks/git_installer.yaml
+      vars:
+        git_repo_url: git@github.com:kontza/lazyvim.git
+        git_repo_name: "{{ this_git_repo_name }}"
+        git_repo_destination: "{{ global.git_repo_destination }}"
+
+    - name: Create a symbolic link from cloned configuration to workstation configuration
+      ansible.builtin.include_tasks: common_tasks/symlink_creator.yaml
+      vars:
+        src: "{{ this_git_repo_destination }}"
+        dest: "{{ global.workstation_configuration }}/nvim"
