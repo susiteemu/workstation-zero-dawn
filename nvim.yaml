@@ -5,7 +5,7 @@
     - name: Set facts part 1
       ansible.builtin.set_fact:
         this_package_name: nvim
-        this_git_repo_name: "lazyvim"
+        this_git_repo_name: lazyvim
 
     - name: Set facts part 2
       ansible.builtin.set_fact:
