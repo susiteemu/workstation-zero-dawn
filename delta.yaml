@@ -31,13 +31,13 @@
         src: "{{ this_git_repo_destination }}/{{ this_git_repo_subfolder_name }}"
         dest: "{{ global.workstation_configuration }}/{{ this_tool_name }}"
 
-    - name: Write to .gitconfig
+    - name: Write delta theme path to .gitconfig path
       community.general.git_config:
         name: include.path
         scope: global
         value: "{{ global.workstation_configuration }}/{{ this_tool_name }}/themes.gitconfig"
 
-    - name: Write to .gitconfig
+    - name: Write delta features to .gitconfig
       community.general.git_config:
         name: delta.features
         scope: global
