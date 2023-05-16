@@ -1,0 +1,25 @@
+---
+- name: Run misc tools playbook
+  hosts: localhost
+  tasks:
+    - name: Install {{ this_package_name }}
+      ansible.builtin.include_tasks: common_tasks/package_installer.yaml
+      vars:
+        package_name: '{{ item }}'
+      loop:
+        - dust
+        - exa
+        - fd
+        - gopass
+        - httpie
+        - jq
+        - jwt-cli
+        - mdless
+        - p7zip
+        - pidof
+        - pinentry
+        - pinentry-mac
+        - plantuml
+        - ripgrep
+        - starship
+        - yq

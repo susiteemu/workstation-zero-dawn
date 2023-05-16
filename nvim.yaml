@@ -9,7 +9,7 @@
 
     - name: Set facts part 2
       ansible.builtin.set_fact:
-        this_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_git_repo_name }}"
+        this_git_repo_destination: '{{ global.git_repo_destination }}/{{ this_git_repo_name }}'
 
     - name: Install {{ this_package_name }}
       ansible.builtin.include_tasks: common_tasks/package_installer.yaml
@@ -20,11 +20,11 @@
       ansible.builtin.include_tasks: common_tasks/git_installer.yaml
       vars:
         git_repo_url: git@github.com:kontza/lazyvim.git
-        git_repo_name: "{{ this_git_repo_name }}"
-        git_repo_destination: "{{ global.git_repo_destination }}"
+        git_repo_name: '{{ this_git_repo_name }}'
+        git_repo_destination: '{{ global.git_repo_destination }}'
 
     - name: Create a symbolic link from cloned configuration to workstation configuration
       ansible.builtin.include_tasks: common_tasks/symlink_creator.yaml
       vars:
-        src: "{{ this_git_repo_destination }}"
-        dest: "{{ global.workstation_configuration }}/{{ this_package_name }}"
+        src: '{{ this_git_repo_destination }}'
+        dest: '{{ global.workstation_configuration }}/{{ this_package_name }}'

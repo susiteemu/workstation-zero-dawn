@@ -11,52 +11,52 @@
 
     - name: Set facts part 2
       ansible.builtin.set_fact:
-        this_git_repo_subfolder_name: "{{ this_package_name }}"
-        this_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_git_repo_name }}"
-        this_catpuccin_git_repo_destination: "{{ global.git_repo_destination }}/{{ this_catpuccin_theme_repo_name }}"
+        this_git_repo_subfolder_name: '{{ this_package_name }}'
+        this_git_repo_destination: '{{ global.git_repo_destination }}/{{ this_git_repo_name }}'
+        this_catpuccin_git_repo_destination: '{{ global.git_repo_destination }}/{{ this_catpuccin_theme_repo_name }}'
 
     - name: Install {{ this_package_name }}
       ansible.builtin.include_tasks: common_tasks/package_installer.yaml
       vars:
-        package_name: "{{ this_package_name }}"
+        package_name: '{{ this_package_name }}'
 
     - name: Clone configuration
       ansible.builtin.include_tasks: common_tasks/git_installer.yaml
       vars:
         git_repo_url: git@github.com:susiteemu/pub_config.git
-        git_repo_name: "{{ this_git_repo_name }}"
-        git_repo_destination: "{{ global.git_repo_destination }}"
+        git_repo_name: '{{ this_git_repo_name }}'
+        git_repo_destination: '{{ global.git_repo_destination }}'
 
     - name: Create configuration folder
       ansible.builtin.file:
-        path: "{{ global.workstation_configuration }}/{{ this_git_repo_subfolder_name }}"
+        path: '{{ global.workstation_configuration }}/{{ this_git_repo_subfolder_name }}'
         state: directory
         mode: u=rwx,g=r,o=r
 
     - name: Create a symbolic link from cloned configuration to workstation configuration
       ansible.builtin.include_tasks: common_tasks/symlink_creator.yaml
       vars:
-        src: "{{ this_git_repo_destination }}/{{ this_git_repo_subfolder_name }}/config"
-        dest: "{{ global.workstation_configuration }}/{{ this_package_name }}/config"
+        src: '{{ this_git_repo_destination }}/{{ this_git_repo_subfolder_name }}/config'
+        dest: '{{ global.workstation_configuration }}/{{ this_package_name }}/config'
 
     - name: Clone Catpuccin theme
       ansible.builtin.include_tasks: common_tasks/git_installer.yaml
       vars:
         git_repo_url: git@github.com:catppuccin/bat.git
-        git_repo_name: "{{ this_catpuccin_theme_repo_name }}"
-        git_repo_destination: "{{ global.git_repo_destination }}"
+        git_repo_name: '{{ this_catpuccin_theme_repo_name }}'
+        git_repo_destination: '{{ global.git_repo_destination }}'
 
     - name: Create theme folder
       ansible.builtin.file:
-        path: "{{ global.workstation_configuration }}/{{ this_git_repo_subfolder_name }}/theme"
+        path: '{{ global.workstation_configuration }}/{{ this_git_repo_subfolder_name }}/theme'
         state: directory
         mode: u=rwx,g=r,o=r
 
     - name: Create a symbolic link from catpuccin theme to workstation configuration
       ansible.builtin.include_tasks: common_tasks/symlink_creator.yaml
       vars:
-        src: "{{ this_catpuccin_git_repo_destination }}/{{ this_catpuccin_selected_theme }}"
-        dest: "{{ global.workstation_configuration }}/{{ this_package_name }}/theme/{{ this_catpuccin_selected_theme }}"
+        src: '{{ this_catpuccin_git_repo_destination }}/{{ this_catpuccin_selected_theme }}'
+        dest: '{{ global.workstation_configuration }}/{{ this_package_name }}/theme/{{ this_catpuccin_selected_theme }}'
 
     - name: Rebuild bat's cache
       ansible.builtin.command: bat cache --build
