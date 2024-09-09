@@ -28,7 +28,6 @@
         - ripgrep
         - starship
         - yq
-      when: 0 > 1
 
     - name: Clone/sync dotfiles
       ansible.builtin.include_tasks: common_tasks/git_installer.yaml
