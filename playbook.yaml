@@ -1,0 +1,52 @@
+---
+- name: Install and configure tools
+  hosts: localhost
+  tasks:
+    - name: Install {{ this_package_name }}
+      ansible.builtin.include_tasks: common_tasks/package_installer.yaml
+      vars:
+        package_name: '{{ item }}'
+      loop:
+        - bat
+        - delta
+        - dust
+        - eza
+        - fd
+        - gopass
+        - httpie
+        - jrnl
+        - jq
+        - jwt-cli
+        - lazygit
+        - mdless
+        - nvim
+        - p7zip
+        - pidof
+        - pinentry
+        - pinentry-mac
+        - plantuml
+        - ripgrep
+        - starship
+        - yq
+      when: 0 > 1
+
+    - name: Clone/sync dotfiles
+      ansible.builtin.include_tasks: common_tasks/git_installer.yaml
+      vars:
+        git_repo_url: 'git@github.com:susiteemu/dotfiles.git'
+        git_repo_name: '{{ global.workstation_configuration_repo_name }}'
+        git_repo_destination: '{{ global.git_repo_destination }}'
+        git_key_file: '{{ global.git_repo_key }}'
+
+    - name: Stow dotfiles
+      ansible.builtin.command:
+        chdir: '{{ global.git_repo_destination }}/{{ global.workstation_configuration_repo_name }}'
+        cmd: stow .
+      register: run
+      changed_when: run.rc != 0
+
+    - name: Rebuild bat's cache
+      ansible.builtin.command: bat cache --build
+      register: bat_cache_build
+      changed_when: bat_cache_build.rc != 0
+# vim: set ft=yaml.ansible

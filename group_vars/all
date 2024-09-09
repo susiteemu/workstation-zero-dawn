@@ -1,3 +1,5 @@
 global:
-  git_repo_destination: $HOME/sandbox/repositories
+  git_repo_destination: $HOME/sandbox/
+  workstation_configuration_repo_name: dotfiles
   workstation_configuration: $HOME/sandbox/.config
+  git_repo_key: $HOME/.ssh/teemutur.github.sshkey

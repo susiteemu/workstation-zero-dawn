@@ -1,18 +1,18 @@
 ---
 - name: Git checkout with key
   ansible.builtin.git:
-    repo: "{{ git_repo_url }}"
-    dest: "{{ git_repo_destination }}/{{ git_repo_name }}"
-    key_file: "{{ git_key_file }}"
-    version: development
+    repo: '{{ git_repo_url }}'
+    dest: '{{ git_repo_destination }}/{{ git_repo_name }}'
+    key_file: '{{ git_key_file }}'
     accept_hostkey: true
   when: git_key_file is defined
   register: result
 
 - name: Git checkout without key (unauthenticated)
   ansible.builtin.git:
-    repo: "{{ git_repo_url }}"
-    dest: "{{ git_repo_destination }}/{{ git_repo_name }}"
+    repo: '{{ git_repo_url }}'
+    dest: '{{ git_repo_destination }}/{{ git_repo_name }}'
     accept_hostkey: true
   when: git_key_file is not defined
   register: result
+# vim: set ft=yaml.ansible
